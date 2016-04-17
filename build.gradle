@@ -1,0 +1,79 @@
+plugins {
+	id "nebula.provided-base" version "3.0.3"
+//	id "net.alchim31.getdown" version "0.4.3"
+	id "java"
+	id "eclipse"
+	id "maven-publish"
+	id "application"
+}
+version = "git describe --always --dirty".execute().text.trim()
+println("version : '${version}'")
+group = "com.github.davidb"
+def description = "My Skeleton project for jmonkeyengine based project"
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+	mavenLocal()
+	jcenter()
+	maven { url "http://dl.bintray.com/jmonkeyengine/contrib" }
+	maven { url "https://jitpack.io" }
+}
+
+def v_jme = "3.1.0-alpha5"
+def v_slf4j = "1.7.7"
+def v_xbuf = '0.7.3-10-gc2d865d-dirty'
+
+dependencies {
+	compile 'com.google.inject:guice:4.0'
+
+	compile "org.jmonkeyengine:jme3-core:${v_jme}"
+	compile "org.jmonkeyengine:jme3-effects:${v_jme}"
+	compile "org.slf4j:slf4j-api:${v_slf4j}"
+	compile "com.jme3x:jfx:1.dev.2016-04-15_161534-442b7cc"
+	compile 'io.reactivex:rxjava:1.1.1'
+	compile 'com.github.davidb:jme3_ext:0.5.0:all'
+	compile "org.xbuf.jme3_xbuf:jme3_xbuf_loader:${v_xbuf}"
+	//runtime "org.jmonkeyengine:jme3-lwjgl:${v_jme}"
+	runtime "org.jmonkeyengine:jme3-jogl:${v_jme}"
+	runtime("org.jmonkeyengine:jme3-desktop:${v_jme}"){
+		exclude module: "jinput"
+	}
+	runtime 'net.java.jinput:jinput:2.0.6'
+	runtime "org.jmonkeyengine:jme3-jogg:${v_jme}"
+	compile "org.slf4j:jul-to-slf4j:${v_slf4j}"
+	runtime 'ch.qos.logback:logback-classic:1.1.2'
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.mockito:mockito-core:1.8.5'
+}
+
+sourceSets {
+	main {
+		resources {
+			srcDirs = ["$projectDir/src/main/resources", "$projectDir/src/main/assets", "$projectDir/assets"]
+			exclude "**/*.blend*"
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+mainClassName = 'ld35.Main'
+applicationDefaultJvmArgs = ['-ea']
+
+//import bundles.Platform
+//getdown {
+//    urlbase = "http://alchim31.net/download/ld35"
+//    checklatest = false
+//    mainClassName = project.mainClassName
+//    jvmArgs = project.applicationDefaultJvmArgs
+//    platforms = [Platform.LINUX_X64, Platform.WINDOWS_I586] //Platform.values()
+//   tmplGetdownTxt = tmplGetdownTxt + "\nallow_offline = true"
+//}
+
+//project.afterEvaluate {
+//  project.getdown.distSpec.eachFile {
+//      println "$it.name"
+//  }
+//}

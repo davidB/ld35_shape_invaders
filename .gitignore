@@ -1,0 +1,27 @@
+/lib
+/log
+
+# gradle
+build
+.gradle
+.nb-gradle
+.nb-gradle-properties
+
+# native created when running
+*.so
+*.dll
+*.dylib
+
+# eclipse
+/bin
+.classpath
+.project
+.settings
+.apt_generated
+.factorypath
+
+# backup
+*.blend?
+
+# crash
+hs_err_pid*.log
