@@ -46,7 +46,7 @@ public class PageInGame extends AppState0 {
 	private final ScheduledExecutorService scheduler;
 	
 	enum ShapeKind {
-		cube, pyramid
+		cube, pyramid, susan, gem, teapot, torus
 	}
 	
 	private Hud<HudInGame> hud;
@@ -186,8 +186,8 @@ public class PageInGame extends AppState0 {
 
 	void spawnScene() {
 		idCnt = 0;
-		waveCnt = 0;
-		cycleCnt = 0;
+		waveCnt = -1;
+		cycleCnt = -1;
 		isRunning = true;
 		enemies.clear();
 		bullets.clear();
@@ -295,7 +295,7 @@ public class PageInGame extends AppState0 {
 	}
 	void startWave() {
 		waveCnt++;
-		cycleCnt = Math.floorDiv(waveCnt, Wave.waves.length);
+		cycleCnt = Math.floorDiv(waveCnt, Wave.waves.length) + 1;
 		enemies.clear();
 		bullets.clear();
 		displayWave();
@@ -305,7 +305,7 @@ public class PageInGame extends AppState0 {
 	void displayWave() {
 		FxPlatformExecutor.runOnFxApplication(() -> {
 			String txt = "Wave " + cycleCnt + "." + ((waveCnt % Wave.waves.length) + 1);
-			System.err.println(txt);
+			System.err.println(txt + " (" + waveCnt +")");
 			hudController.text.setText(txt);
 			ftWave.play();
 		});
@@ -313,7 +313,7 @@ public class PageInGame extends AppState0 {
 
 	void generateWave() {
 		Wave wave = Wave.waves[waveCnt % Wave.waves.length];
-		float speed = cycleCnt * wave.baseSpeed;
+		float speed = cycleCnt * cycleCnt * wave.baseSpeed;
 		float z0 = -height;
 		float stepX = widthHalf * 2f / wave.width;
 		float stepZ = 5;
