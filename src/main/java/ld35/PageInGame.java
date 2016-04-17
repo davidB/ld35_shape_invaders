@@ -110,8 +110,7 @@ public class PageInGame extends AppState0 {
 				, controls.changeShape.value.subscribe((v) -> {togglePlayerShape(player0, Math.round(v));})
 			);
 		app.getInputManager().addRawInputListener(inputMapper.rawInputListener);
-		//app.getInputManager().setCursorVisible(false);
-		app.gainFocus(); //HACK
+		requestFocus(); //HACK
 		spawnScene();
 	}
 
@@ -163,6 +162,26 @@ public class PageInGame extends AppState0 {
 			}
 			if (end) gameOver();
 		}
+	}
+
+	void requestFocus() {
+		FxPlatformExecutor.runOnFxApplication(() -> {
+			//HACK TO force focus (keyboard) on play area
+			//hud.region.focusedProperty().addListener((v) -> System.out.println("focus change : " + v));
+			//hud.region.requestFocus();
+			//Scene scene = hud.region.getScene();
+			//scene.getWindow().requestFocus();
+			//Event.fireEvent(scene.getWindow(), new MouseEvent(MouseEvent.MOUSE_CLICKED, 10, 10, (int)scene.getWindow().getX() + 10, (int)scene.getWindow().getY() + 10, MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
+			try {
+				java.awt.Robot r = new java.awt.Robot();
+//				r.mouseMove((int)scene.getWindow().getX() + 10, (int)scene.getWindow().getY() + 10);
+				r.mousePress(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);
+				r.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
 	void spawnScene() {
