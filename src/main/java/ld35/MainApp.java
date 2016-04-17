@@ -30,7 +30,7 @@ class MainApp {
 	@Inject
 	MainApp(SimpleApplication app, GuiManager guiManager, PageManager<Pages> pageManager) {
 		//		setAspectRatio(app, 16, 9);
-		//SetupHelpers.disableDefaults(app);
+		SetupHelpers.disableDefaults(app);
 		SetupHelpers.setDebug(app, false);
 		SetupHelpers.logJoystickInfo(app.getInputManager());
 		initLoaders(app);

@@ -97,7 +97,8 @@ class MainModule extends AbstractModule {
 		settings.setRenderer(AppSettings.JOGL_OPENGL_BACKWARD_COMPATIBLE);
 		settings.setAudioRenderer(AppSettings.JOAL);
 		//settings.setRenderer(AppSettings.LWJGL_OPENGL3);
-		settings.setFrameRate(30);
+		settings.setFrameRate(60);
+		settings.setFrequency(60);
 		return settings;
 	}
 
