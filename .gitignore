@@ -1,5 +1,6 @@
 /lib
 /log
+/tmp
 
 # gradle
 build
