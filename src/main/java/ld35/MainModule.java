@@ -7,26 +7,23 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-
 import javax.inject.Singleton;
-
-import jme3_ext.AppSettingsLoader;
-import jme3_ext.InputMapper;
-import jme3_ext.InputMapperHelpers;
-import jme3_ext.PageManager;
-import rx.subjects.PublishSubject;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
-import com.jme3.input.event.MouseButtonEvent;
-import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.system.AppSettings;
 import com.jme3x.jfx.FxPlatformExecutor;
+
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import jme3_ext.AppSettingsLoader;
+import jme3_ext.InputMapper;
+import jme3_ext.InputMapperHelpers;
+import jme3_ext.PageManager;
+import rx.subjects.PublishSubject;
 
 class MainModule extends AbstractModule {
 	@Override
