@@ -16,9 +16,6 @@ public class HudWelcome {
 	public Button play;
 
 	@FXML
-	public Button settings;
-
-	@FXML
 	public Button quit;
 
 }
