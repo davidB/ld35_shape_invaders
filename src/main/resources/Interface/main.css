@@ -52,7 +52,7 @@
 
 #hudInGame * {
 	-fx-background-color: transparent;
-	-fx-font-size: 12em;
+	-fx-font-size: 8em;
 }
 #consoleLog {
 	-fx-opacity: 0.85;
