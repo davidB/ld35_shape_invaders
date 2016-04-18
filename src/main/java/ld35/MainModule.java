@@ -9,10 +9,13 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Singleton;
 
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
+import com.jme3.input.event.KeyInputEvent;
 import com.jme3.system.AppSettings;
 import com.jme3x.jfx.FxPlatformExecutor;
 
@@ -23,6 +26,7 @@ import jme3_ext.AppSettingsLoader;
 import jme3_ext.InputMapper;
 import jme3_ext.InputMapperHelpers;
 import jme3_ext.PageManager;
+import rx.Observer;
 import rx.subjects.PublishSubject;
 
 class MainModule extends AbstractModule {
@@ -144,23 +148,23 @@ class MainModule extends AbstractModule {
 	public InputMapper inputMapper(Commands controls) {
 		//TODO save / restore mapper, until then harcoded mapping
 		InputMapper m = new InputMapper();
-		InputMapperHelpers.mapKey(m, KeyInput.KEY_ESCAPE, controls.exit.value);
+		mapKey(m, KeyInput.KEY_ESCAPE, controls.exit.value);
 		// arrow
-		InputMapperHelpers.mapKey(m, KeyInput.KEY_UP, controls.changeShape.value, true);
-		InputMapperHelpers.mapKey(m, KeyInput.KEY_DOWN, controls.changeShape.value, false);
-		InputMapperHelpers.mapKey(m, KeyInput.KEY_RIGHT, controls.moveRight.value, true);
-		InputMapperHelpers.mapKey(m, KeyInput.KEY_LEFT, controls.moveLeft.value, false);
+		mapKey(m, KeyInput.KEY_UP, controls.changeShape.value, 1);
+		mapKey(m, KeyInput.KEY_DOWN, controls.changeShape.value, -1);
+		mapKey(m, KeyInput.KEY_RIGHT, controls.moveRight.value, 1);
+		mapKey(m, KeyInput.KEY_LEFT, controls.moveLeft.value, 1);
 		// WASD / ZQSD
 		//if (InputMapperHelpers.isKeyboardAzerty()) {
-			InputMapperHelpers.mapKey(m, KeyInput.KEY_Z, controls.changeShape.value, true);
+			mapKey(m, KeyInput.KEY_Z, controls.changeShape.value, 1);
 			//InputMapperHelpers.mapKey(m, KeyInput.KEY_S, controls.changeShape.value, false);
-			InputMapperHelpers.mapKey(m, KeyInput.KEY_Q, controls.moveLeft.value, true);
+			mapKey(m, KeyInput.KEY_Q, controls.moveLeft.value, 1);
 			//InputMapperHelpers.mapKey(m, KeyInput.KEY_D, controls.moveRight.value, true);
 		//} else {
-			InputMapperHelpers.mapKey(m, KeyInput.KEY_W, controls.changeShape.value, true);
-			InputMapperHelpers.mapKey(m, KeyInput.KEY_S, controls.changeShape.value, false);
-			InputMapperHelpers.mapKey(m, KeyInput.KEY_A, controls.moveLeft.value, true);
-			InputMapperHelpers.mapKey(m, KeyInput.KEY_D, controls.moveRight.value, true);
+			mapKey(m, KeyInput.KEY_W, controls.changeShape.value, 1);
+			mapKey(m, KeyInput.KEY_S, controls.changeShape.value, -1);
+			mapKey(m, KeyInput.KEY_A, controls.moveLeft.value, 1);
+			mapKey(m, KeyInput.KEY_D, controls.moveRight.value, 1);
 			/*
 			m.map(InputMapperHelpers.tmplMouseMotionEvent(), (MouseMotionEvent evt) -> {
 				controls.moveLeft.value.onNext(Math.max(0, -1 * Math.signum((float)evt.getDX())));
@@ -171,7 +175,17 @@ class MainModule extends AbstractModule {
 			*/
 		//}
 		// actions
-		InputMapperHelpers.mapKey(m, KeyInput.KEY_SPACE, controls.action1.value);
+		mapKey(m, KeyInput.KEY_SPACE, controls.action1.value);
 		return m;
+	}
+
+	public static void mapKey(final InputMapper m, final int keyCode, final Observer<Float> dest, float v) {
+		m.map(InputMapperHelpers.tmplKeyInputEvent(keyCode), (KeyInputEvent evt) -> {
+			return (evt.isPressed() || evt.isRepeating())? v: 0f; 
+			}, dest);
+	}
+	public static void mapKey(final InputMapper m, final int keyCode, final Observer<Boolean> dest) {
+		KeyInputEvent _tmplKeyInputEvent = InputMapperHelpers.tmplKeyInputEvent(keyCode);
+		m.<KeyInputEvent, Boolean>map(_tmplKeyInputEvent, (KeyInputEvent evt) -> (evt.isPressed() || evt.isRepeating()), dest);
 	}
 }
