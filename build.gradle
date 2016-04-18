@@ -1,11 +1,12 @@
 plugins {
 	id "nebula.provided-base" version "3.0.3"
-//	id "net.alchim31.getdown" version "0.4.3"
+	id "net.alchim31.getdown" version "0.4.4"
 	id "java"
 	id "eclipse"
 	id "maven-publish"
 	id "application"
 }
+
 version = "git describe --always --dirty".execute().text.trim()
 println("version : '${version}'")
 group = "com.github.davidb"
@@ -62,15 +63,15 @@ sourceSets {
 mainClassName = 'ld35.Main'
 applicationDefaultJvmArgs = ['-ea']
 
-//import bundles.Platform
-//getdown {
-//    urlbase = "http://alchim31.net/download/ld35"
-//    checklatest = false
-//    mainClassName = project.mainClassName
-//    jvmArgs = project.applicationDefaultJvmArgs
-//    platforms = [Platform.LINUX_X64, Platform.WINDOWS_I586] //Platform.values()
-//   tmplGetdownTxt = tmplGetdownTxt + "\nallow_offline = true"
-//}
+import bundles.Platform
+getdown {
+    urlbase = "http://alchim31.net/download/ld35"
+    checklatest = false
+    mainClassName = project.mainClassName
+    jvmArgs = project.applicationDefaultJvmArgs
+    platforms = [Platform.LINUX_X64, Platform.WINDOWS_I586] //Platform.values()
+    tmplGetdownTxt = tmplGetdownTxt + "\nallow_offline = true"
+}
 
 //project.afterEvaluate {
 //  project.getdown.distSpec.eachFile {
