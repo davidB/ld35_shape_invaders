@@ -34,9 +34,10 @@ dependencies {
 	compile "org.jmonkeyengine:jme3-effects:${v_jme}"
 	compile "org.slf4j:slf4j-api:${v_slf4j}"
 	//compile "com.jme3x:jfx:1.dev.2016-04-15_161534-442b7cc"
-  compile "com.github.davidb:JME3-JFX:jogl-SNAPSHOT"
+ 	compile "com.github.davidb:JME3-JFX:jogl-SNAPSHOT"
 	compile 'io.reactivex:rxjava:1.1.1'
 	compile 'com.github.davidb:jme3_ext:0.5.0:all'
+	compile "org.xbuf.jme3_xbuf:jme3_xbuf_rt:${v_xbuf}"
 	compile "org.xbuf.jme3_xbuf:jme3_xbuf_loader:${v_xbuf}"
 	//runtime "org.jmonkeyengine:jme3-lwjgl:${v_jme}"
 	runtime "org.jmonkeyengine:jme3-jogl:${v_jme}"
